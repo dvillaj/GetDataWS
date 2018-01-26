@@ -22,6 +22,7 @@ parser.add_argument("-i", "--item", help="Elemento de la respuesta donde se encu
 parser.add_argument("-n", "--name", help="Nombre del fichero")
 parser.add_argument("-f", "--format", help="Formato de los datos (json o csv)", default = "json")
 parser.add_argument("-t", "--timestamp", help="Inserta una marca de tiempo en los datos", action='store_true', default = False)
+parser.add_argument("-e", "--header", help="Elimina la cabecera del fichero (Solo CSV)", action='store_true', default = False)
 args = parser.parse_args()
 
 if args.url is None:
@@ -74,4 +75,4 @@ if args.format == "csv":
     if args.timestamp:
         df = df.assign(_timestamp = timestamp_str)
 
-    df.to_csv(fileName, index=False, header=True, decimal='.', sep= args.sep, encoding='utf-8')
+    df.to_csv(fileName, index=False, header=not args.header, decimal='.', sep= args.sep, encoding='utf-8')
