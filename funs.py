@@ -23,7 +23,7 @@ def clean_json(item_json):
     return item_json
 
 def get_timestamp():
-    return datetime.datetime.now().isoformat()
+    return datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
 def save_json(response_json, fileName, args):
     with open(fileName, 'w') as file:
