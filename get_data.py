@@ -15,6 +15,7 @@ parser.add_argument("-f", "--format", help="Formato de los datos (json o csv)", 
 parser.add_argument("-t", "--timestamp", help="Inserta una marca de tiempo en los datos", action='store_true', default = False)
 parser.add_argument("-e", "--header", help="Elimina la cabecera del fichero (Solo CSV)", action='store_true', default = False)
 parser.add_argument("-c", "--clean", help="Limpia los nombres de las claves sustituyendo los caracteres no válidos (Solo JSON)", action='store_true', default = False)
+parser.add_argument("--token", help="Se especifica un token en la cabecera de la petición")
 args = parser.parse_args()
 
 if args.url is None:
@@ -29,6 +30,11 @@ if args.format not in valid_formats:
 if args.name is None:
     args.name = "%s-%s" % (os.path.basename(os.path.normpath(args.url)), time.strftime("%Y%m%d%H%M%S"))
 
+
+headers_dict = {}
+if not args.token is None:
+    headers_dict["token"] = args.token 
+
 if not os.path.exists(args.dir):
     os.makedirs(args.dir)
 
@@ -37,7 +43,7 @@ print("Getting item_json from %s" % args.url)
 print("File output: %s" % fileName)
 
 try:
-    response = requests.get(args.url)
+    response = requests.get(args.url, headers = headers_dict)
 except Exception as e:
     print("Problems with the url: %s" % e.__doc__)
     sys.exit(1)
