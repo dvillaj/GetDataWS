@@ -28,3 +28,9 @@ get_data.sh \
     --header \
     https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/Listados/ComunidadesAutonomas/
 ```
+
+## Requirements
+requests
+```
+pip istall requests
+```
